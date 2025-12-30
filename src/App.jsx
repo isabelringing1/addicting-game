@@ -7,6 +7,7 @@ import CardPack from "./CardPack";
 import Debug from "./Debug";
 import Bet from "./Bet";
 import Timer from "./Timer";
+import BigNumber from "./BigNumber";
 
 function App() {
   const [numbers, setNumbers] = useState({});
@@ -16,11 +17,17 @@ function App() {
   const [hearts, setHearts] = useState(100);
   const [nextHeartRefreshTime, setNextHeartRefreshTime] = useState(null);
   const [showingRoll, setShowingRoll] = useState(-1);
+  const [showingNumber, setShowingNumber] = useState(-1);
 
   const REFRESH_TIME = 60000;
 
   useEffect(() => {
     loadData();
+    document.addEventListener("keydown", (e) => {
+      if (e.key == " ") {
+        rollNumber();
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -59,15 +66,19 @@ function App() {
     }
   };
 
-  const rollNumber = () => {
-    if (hearts <= 0) {
+  const rollNumber = (e, cheatNumber = -1) => {
+    if (hearts <= 0 && cheatNumber == -1) {
       return;
     }
-    setHearts(hearts - 1);
-    if (!nextHeartRefreshTime) {
-      setNextHeartRefreshTime(Date.now() + REFRESH_TIME);
+    var rolledNumber = cheatNumber;
+
+    if (cheatNumber == -1) {
+      setHearts(hearts - 1);
+      if (!nextHeartRefreshTime) {
+        setNextHeartRefreshTime(Date.now() + REFRESH_TIME);
+      }
+      rolledNumber = roll();
     }
-    var rolledNumber = roll();
     var newNumbers = { ...numbers };
     var newRolls = [...rolls];
     newNumbers[rolledNumber] = newNumbers[rolledNumber]
@@ -76,7 +87,6 @@ function App() {
     newRolls.push(rolledNumber);
     setNumbers(newNumbers);
     setRolls(newRolls);
-
     showRolledNumber(newRolls[newRolls.length - 1]);
   };
 
@@ -128,6 +138,7 @@ function App() {
             setTimeout(() => {
               setRolledNumber(-1);
               setShowingRoll(-1);
+              setShowingNumber(n);
             }, 300);
           }, 500);
         }
@@ -147,8 +158,17 @@ function App() {
 
   return (
     <div id="content">
-      <Debug rolls={rolls} numbers={numbers} />
+      <Debug
+        rolls={rolls}
+        numbers={numbers}
+        setHearts={setHearts}
+        rollNumber={rollNumber}
+      />
       <CardPack rollNumbers={rollNumbers} />
+      {showingNumber != -1 && (
+        <BigNumber n={showingNumber} setShowingNumber={setShowingNumber} />
+      )}
+
       <div id="numbers-grid-container">
         <div id="numbers-grid">
           {Array.from({ length: 100 }, (_, i) => i + 1).map((n) => {

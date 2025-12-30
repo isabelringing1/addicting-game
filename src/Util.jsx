@@ -80,6 +80,10 @@ const rollMultiple = (amount) => {
   return rolls;
 };
 
+const getRarityIndex = (n) => {
+  return data.drop_rates[n];
+};
+
 const getRarity = (n) => {
   var r = data.drop_rates[n];
   if (r == 1) {
@@ -92,4 +96,4 @@ const getRarity = (n) => {
   return "common";
 };
 
-export { useInterval, msToTime, roll, rollMultiple, getRarity };
+export { useInterval, msToTime, roll, rollMultiple, getRarity, getRarityIndex };

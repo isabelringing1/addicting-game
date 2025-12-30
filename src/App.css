@@ -284,6 +284,211 @@ button {
   opacity: 0.8;
 }
 
+.big-number-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  animation: zoom-in 0.7s ease-in-out;
+}
+
+.zoom-out {
+  animation: zoom-out 0.5s ease-in;
+  -webkit-animation: zoom-out 0.5s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.big-numbers {
+  animation: floating-container 3s infinite ease-in-out;
+  -webkit-animation: floating-container 3s infinite ease-in-out;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Song Myung", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.big-number {
+  color: #353535;
+  font-size: 58vh;
+  -webkit-text-stroke: 0.8vh #ffffffc6;
+}
+
+#big-number-0 {
+  animation: floating 3s infinite ease-in-out;
+  -webkit-animation: floating 3s infinite ease-in-out;
+  rotate: -7deg;
+  padding-bottom: 8vh;
+}
+
+#big-number-1 {
+  animation: floating 3s infinite ease-in-out 0.3s;
+  -webkit-animation: floating 3s infinite ease-in-out 0.3s;
+  rotate: 5deg;
+}
+
+@keyframes zoom-in {
+  0% {
+    transform: scale(0);
+  }
+
+  12% {
+    transform: scale(0.11);
+  }
+
+  24% {
+    transform: scale(0.44);
+  }
+
+  36% {
+    transform: scale(0.98);
+  }
+
+  54% {
+    transform: scale(0.85);
+  }
+
+  74% {
+    transform: scale(0.98);
+  }
+
+  82% {
+    transform: scale(0.94);
+  }
+
+  92% {
+    transform: scale(0.99);
+  }
+
+  96% {
+    transform: scale(0.98);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.11);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes floating-small {
+  from {
+    transform: translate(0, -0.5vh) scale(1);
+  }
+  50% {
+    transform: translate(0, 0.5vh) scale(1.1);
+  }
+  to {
+    transform: translate(0, -0.5vh) scale(1);
+  }
+}
+
+@keyframes floating {
+  from {
+    transform: translate(0, -1vh);
+  }
+  50% {
+    transform: translate(0, 1vh);
+  }
+  to {
+    transform: translate(0, -1vh);
+  }
+}
+
+@keyframes floating-container {
+  from {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.03, 1.03);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+.big-number-bg {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  mix-blend-mode: multiply;
+}
+
+@keyframes rotate1 {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+.bg-round {
+  width: 50vh;
+  height: 50vh;
+}
+
+.bg-wavy {
+  width: 55vh;
+  height: 55vh;
+  animation: rotate1 65s infinite;
+}
+
+.bg-spiky {
+  width: 53vh;
+  height: 53vh;
+  animation: rotate1 45s infinite;
+}
+
+.bg-flower {
+  width: 53vh;
+  height: 53vh;
+  animation: rotate1 45s infinite;
+}
+
+.twinkle {
+  position: absolute;
+  mix-blend-mode: multiply;
+  z-index: 1;
+  position: relative;
+  transition: transform 0.8s ease-out;
+
+  /*animation: floating-small 3s infinite ease-in-out;
+  -webkit-animation: floating-small 3s infinite ease-in-out;*/
+}
+
+.twinkle-small {
+  height: 2vh;
+  width: 1.5vh;
+}
+
+.twinkle-big {
+  height: 5vh;
+  width: 3.5vh;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
   #numbers-grid {

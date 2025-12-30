@@ -1,0 +1,48 @@
+{
+  "0": {
+    "id": "common",
+    "bg_path": "/assets/number_bg.png",
+    "color_mode": "colorMode",
+    "bg_type": "bg-round",
+    "threshold": 0.15,
+    "font_color": "#353535",
+    "num_twinkles": 0
+  },
+  "1": {
+    "id": "rare",
+    "bg_path": "/assets/number_bg2.png",
+    "color_mode": "custom",
+    "primary_color": "#2c63db",
+    "secondary_color": "#ffffff",
+    "custom_palette": ["#2c63db", "#9ec9ff", "#f2f8ff", "#ffffff"],
+    "bg_type": "bg-wavy",
+    "threshold": -0.2,
+    "font_color": "#2a2f9a",
+    "num_twinkles": 3
+  },
+  "2": {
+    "id": "epic",
+    "bg_path": "/assets/number_bg3.png",
+    "color_mode": "custom",
+    "primary_color": "#9411d1",
+    "secondary_color": "#ffffff",
+    "custom_palette": ["#62008f", "#8b00cc", "#f4dbff", "#ffffff"],
+    "bg_type": "bg-spiky",
+    "threshold": 0,
+    "font_color": "#590289",
+    "num_twinkles": 7
+  },
+  "3": {
+    "id": "legendary",
+    "bg_path": "/assets/number_bg4.png",
+    "color_mode": "custom",
+    "primary_color": "#d49b0d",
+    "secondary_color": "#ffffff",
+    "custom_palette": ["#d49b0d", "#e6b770", "#ffecbd", "#ffffff"],
+    "bg_type": "bg-flower",
+    "threshold": 0,
+    "font_color": "#b1810a",
+    "num_twinkles": 12,
+    "twinkle_threshold": -1
+  }
+}

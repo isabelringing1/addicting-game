@@ -5,14 +5,18 @@ function Number(props) {
   const { n, data, isHighlighted, isRolled, showingRoll } = props;
   const [hover, setHover] = useState(false);
 
-  var opacity = 0.1;
+  var opacity = 0.05;
   var numTimesRolled = 0;
   if (data) {
     numTimesRolled = showingRoll ? data - 1 : data;
-    opacity = scale(numTimesRolled / n, 0, 1, 0.1, 1);
+    opacity =
+      numTimesRolled == 0 ? 0.05 : scale(numTimesRolled / n, 0, 1, 0.1, 1);
   }
   var containerClass = "number-container";
   var numberClass = "number";
+  if (numTimesRolled == 0) {
+    numberClass += " unrolled";
+  }
   if (isHighlighted) {
     containerClass += " highlighted";
     numberClass += " highlighted";
