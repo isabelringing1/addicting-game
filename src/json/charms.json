@@ -1,0 +1,97 @@
+{
+  "paths": [
+    [
+      {
+        "id": "speed-up-1",
+        "category": "speed-up",
+        "name": "Rabbit's Foot",
+        "desc": "+15% Roll Speed",
+        "cost": 500,
+        "new_time_multiplier": 0.85
+      },
+      {
+        "id": "speed-up-2",
+        "category": "speed-up",
+        "name": "Horseshoe",
+        "desc": "+30% Roll Speed",
+        "cost": 1000,
+        "new_time_multiplier": 0.7
+      },
+      {
+        "id": "speed-up-3",
+        "category": "speed-up",
+        "name": "Wishbone",
+        "desc": "+45% Roll Speed",
+        "cost": 2000,
+        "new_time_multiplier": 0.55
+      },
+      {
+        "id": "speed-up-4",
+        "category": "speed-up",
+        "name": "Oranges",
+        "desc": "+60% Roll Speed",
+        "cost": 4000,
+        "new_time_multiplier": 0.4
+      },
+      {
+        "id": "speed-up-5",
+        "category": "speed-up",
+        "name": "Dice",
+        "desc": "+75% Roll Speed",
+        "cost": 8000,
+        "new_time_multiplier": 0.25
+      },
+      {
+        "id": "speed-up-6",
+        "category": "speed-up",
+        "name": "Scarab",
+        "desc": "+90% Roll Speed",
+        "cost": 16000,
+        "new_time_multiplier": 0.1
+      }
+    ],
+
+    [
+      {
+        "id": "heart-upgrade-1",
+        "category": "heart-upgrade",
+        "name": "Four Leaf Clover",
+        "desc": "+5 Max ♥",
+        "cost": 300,
+        "heart_upgrade": 5
+      },
+      {
+        "id": "heart-upgrade-2",
+        "category": "heart-upgrade",
+        "name": "Cat",
+        "desc": "+5 Max ♥",
+        "cost": 600,
+        "heart_upgrade": 5
+      },
+      {
+        "id": "heart-upgrade-3",
+        "category": "heart-upgrade",
+        "name": "Penny",
+        "desc": "+5 Max ♥",
+        "cost": 900,
+        "heart_upgrade": 5
+      },
+      {
+        "id": "heart-upgrade-4",
+        "category": "heart-upgrade",
+        "desc": "+5 Max ♥",
+        "name": "Ladybug",
+        "cost": 1200,
+        "heart_upgrade": 5
+      },
+      {
+        "id": "heart-upgrade-5",
+        "category": "heart-upgrade",
+        "name": "Shooting Star",
+        "desc": "+5 Max ♥",
+        "cost": 1500,
+        "heart_upgrade": 5
+      }
+    ]
+  ]
+}

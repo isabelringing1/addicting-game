@@ -41,6 +41,7 @@ interface DitherShaderProps {
   /** Additional CSS classes for the container (use this to set size via Tailwind) */
   className?: string;
   style?: Object;
+  children: Array;
 }
 
 // 4x4 Bayer matrix for ordered dithering
@@ -113,6 +114,7 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
   animationSpeed = 0.02,
   className,
   style,
+  children,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -338,9 +340,7 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
 
     const processImage = (img: HTMLImageElement) => {
       if (isCancelled) return;
-
-      const dpr =
-        typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+      const dpr = 1;
       const displayWidth = dimensions.width;
       const displayHeight = dimensions.height;
 
@@ -354,8 +354,8 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
 
       // Create offscreen canvas to get image data
       const offscreen = document.createElement("canvas");
-      const iw = img.naturalWidth || displayWidth;
-      const ih = img.naturalHeight || displayHeight;
+      const iw = displayWidth;
+      const ih = displayHeight;
 
       let dw = displayWidth;
       let dh = displayHeight;
@@ -383,12 +383,10 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
         dx = Math.floor((displayWidth - dw) / 2);
         dy = Math.floor((displayHeight - dh) / 2);
       }
-
       offscreen.width = displayWidth;
       offscreen.height = displayHeight;
       const offCtx = offscreen.getContext("2d");
       if (!offCtx) return;
-
       offCtx.drawImage(img, dx, dy, dw, dh);
 
       try {
@@ -419,7 +417,11 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
     };
 
     // If image is already loaded, reprocess it
-    if (imageRef.current && imageRef.current.complete) {
+    if (
+      imageRef.current &&
+      imageRef.current.complete &&
+      imageRef.current.src == src
+    ) {
       processImage(imageRef.current);
     } else {
       // Load the image
@@ -452,6 +454,7 @@ export const DitherShader: React.FC<DitherShaderProps> = ({
       className={cn("relative h-full w-full", className)}
       style={style}
     >
+      {children ? children[0] : null}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full"

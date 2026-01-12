@@ -1,22 +1,34 @@
 import { useState } from "react";
 import NumberTooltip from "./NumberTooltip";
+import { getRarityData } from "./Util";
 
 function Number(props) {
-  const { n, data, isHighlighted, isRolled, showingRoll } = props;
+  const {
+    n,
+    viewData,
+    isHighlighted,
+    isRolled,
+    showingRoll,
+    bigNumberQueue,
+    isMobile,
+  } = props;
   const [hover, setHover] = useState(false);
 
-  var opacity = 0.05;
+  var opacity = 0.1;
   var numTimesRolled = 0;
-  if (data) {
-    numTimesRolled = showingRoll ? data - 1 : data;
-    opacity =
-      numTimesRolled == 0 ? 0.05 : scale(numTimesRolled / n, 0, 1, 0.1, 1);
+  var rarityData = getRarityData(n);
+
+  if (viewData) {
+    numTimesRolled = viewData;
+    opacity = scale(numTimesRolled / n, 0, 1, 0.1, 1);
   }
   var containerClass = "number-container";
   var numberClass = "number";
   if (numTimesRolled == 0) {
+    containerClass += " unrolled";
     numberClass += " unrolled";
   }
+
   if (isHighlighted) {
     containerClass += " highlighted";
     numberClass += " highlighted";
@@ -36,7 +48,22 @@ function Number(props) {
 
   return (
     <div className={containerClass} id={"number-container-" + n}>
-      {hover && <NumberTooltip n={n} numTimesRolled={numTimesRolled} />}
+      {hover && numTimesRolled > 0 && (
+        <NumberTooltip
+          n={n}
+          numTimesRolled={numTimesRolled}
+          isMobile={isMobile}
+        />
+      )}
+      {numTimesRolled >= n && (
+        <div
+          className="completed-bg"
+          style={{
+            background: rarityData.completed_color,
+            scale: hover ? 1.1 : 1,
+          }}
+        ></div>
+      )}
       <div
         className={numberClass}
         id={"number-" + n}
@@ -50,8 +77,14 @@ function Number(props) {
         onMouseOut={() => {
           setHover(false);
         }}
+        onTouchStart={() => {
+          setHover(true);
+        }}
+        onTouchEnd={() => {
+          setHover(false);
+        }}
       >
-        {n}
+        {numTimesRolled == 0 ? "?" : n}
       </div>
     </div>
   );

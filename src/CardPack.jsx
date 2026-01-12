@@ -1,13 +1,20 @@
 import { useState, useRef, useEffect } from "react";
-import { segmentsCanvas, splitCanvasByLine } from "./LineUtil";
+import {
+  segmentsCanvas,
+  splitCanvasByLine,
+  screenLineToCanvasLine,
+} from "./LineUtil";
 import Drawing from "./Drawing";
-import cardPackImg from "/card_pack.png";
+import cardPackImg from "/assets/card_pack.png";
+import cardPackOld from "/assets/card_pack_old.png";
+import { DitherShader } from "./dither-shader";
 
 const CardPack = (props) => {
-  const { rollNumbers } = props;
+  const { pack, openPack, hidePack, bigNumberQueue } = props;
 
   const [isDrawing, setIsDrawing] = useState(false);
   const [lines, setLines] = useState([]);
+  const [numbersRolled, setNumbersRolled] = useState(false);
 
   const drawAreaRef = useRef(null);
   const canvasRef = useRef(null);
@@ -15,17 +22,29 @@ const CardPack = (props) => {
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     const image = new Image();
-    image.src = "/card_pack.png";
+    image.src = "/assets/card_pack.png";
     image.onload = () => {
-      context.drawImage(image, 0, 0, 300, 500);
+      context.drawImage(image, 0, 0, 373, 658);
     };
   }, []);
 
+  useEffect(() => {
+    if (bigNumberQueue.length == 0 && numbersRolled) {
+      hidePack();
+    }
+  }, [bigNumberQueue]);
+
   const relativeCoordinatesForEvent = (mouseEvent) => {
+    var x = mouseEvent.clientX;
+    var y = mouseEvent.clientY;
+    if (mouseEvent.touches) {
+      x = mouseEvent.touches[0].clientX;
+      y = mouseEvent.touches[0].clientY;
+    }
     const boundingRect = drawAreaRef.current.getBoundingClientRect();
     return {
-      x: mouseEvent.clientX - boundingRect.left,
-      y: mouseEvent.clientY - boundingRect.top,
+      x: x - boundingRect.left,
+      y: y - boundingRect.top,
     };
   };
 
@@ -34,6 +53,12 @@ const CardPack = (props) => {
       return;
     }
 
+    const point = relativeCoordinatesForEvent(mouseEvent);
+    setLines([[point]]);
+    setIsDrawing(true);
+  };
+
+  const handleTouchStart = (mouseEvent) => {
     const point = relativeCoordinatesForEvent(mouseEvent);
     setLines([[point]]);
     setIsDrawing(true);
@@ -66,11 +91,18 @@ const CardPack = (props) => {
     }
     if (segmentsCanvas(canvasRef.current, lines[0])) {
       setIsDrawing(false);
-      rollNumbers();
+
       const result = splitCanvasByLine(canvasRef.current, lines[0]);
-      console.log(result);
+      if (result == null) {
+        return;
+      }
+      openPack(pack);
+      setNumbersRolled(true);
       result.halfA.className = "card-pack-img half-a";
       result.halfB.className = "card-pack-img half-b";
+      var drawing = document.getElementById("drawing");
+      drawing.classList.remove("fade-out");
+      drawing.classList.add("fade-out");
       if (result) {
         document.getElementById("card-pack").replaceChildren();
         document.getElementById("card-pack").appendChild(result.halfA);
@@ -84,19 +116,34 @@ const CardPack = (props) => {
       id="card-pack-container"
       ref={drawAreaRef}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       onMouseMove={handleMouseMove}
+      onTouchMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      onTouchEnd={handleMouseUp}
     >
       <Drawing lines={lines} />
+
       <div className="card-pack" id="card-pack">
         <canvas
           className="card-pack-img"
           id="card-pack-img-og"
           ref={canvasRef}
-          width={300}
-          height={500}
+          width={373}
+          height={658}
         />
       </div>
+      {/*<DitherShader
+        src={cardPackOld}
+        gridSize={2}
+        ditherMode="bayer"
+        colorMode={"custom"}
+        threshold={0}
+        customPalette={["#575757", "#cbcbcbff", "#ffffffff"]}
+        className={"test"}
+        id="test"
+        objectFit="contain"
+      />*/}
     </div>
   );
 };

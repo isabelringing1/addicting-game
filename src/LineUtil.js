@@ -75,25 +75,49 @@ function segmentsCanvas(originalCanvas, points) {
   return intersections && intersections.length > 1;
 }
 
-function splitCanvasByLine(originalCanvas, points) {
+function screenLineToCanvasLine(line, canvas) {
+  const rect = canvas.getBoundingClientRect();
+
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const canvasLine = line.map(({ x, y }) => ({
+    x: Math.min(Math.max((x - rect.left) * scaleX, 0), canvas.width),
+    y: Math.min(Math.max((y - rect.top) * scaleY, 0), canvas.height),
+  }));
+
+  return canvasLine;
+}
+
+function splitCanvasByLine(originalCanvas, screenPoints) {
   var boundingBox = originalCanvas.getBoundingClientRect();
-  const width = boundingBox.width;
+  console.log(boundingBox);
+  console.log(originalCanvas, boundingBox, originalCanvas.width);
+  const width = originalCanvas.width;
   const height = boundingBox.height;
   const top = boundingBox.top;
   const left = boundingBox.left;
-  const intersections = getLineIntersections(points, top, left, width, height);
-  if (!intersections || intersections.length < 2) return null;
+
+  var points = screenLineToCanvasLine(screenPoints, originalCanvas);
+  const intersections = getLineIntersections(
+    screenPoints,
+    top,
+    left,
+    width,
+    height
+  );
+  console.log(points, intersections);
+  // if (!intersections || intersections.length < 2) return null;
 
   // Extend the polyline to include intersection endpoints at edges
-  const fullPath = [intersections[0], ...points, intersections[1]];
-
+  //const fullPath = [intersections[0], ...points, intersections[1]];
+  const fullPath = [...points];
   const makeHalfCanvas = (invert = false) => {
     const c = document.createElement("canvas");
     c.width = width;
     c.height = height;
 
     const ctx = c.getContext("2d");
-    ctx.fillStyle = "rgba(0, 0, 255, 0.45)";
     ctx.save();
 
     ctx.beginPath();
@@ -101,31 +125,44 @@ function splitCanvasByLine(originalCanvas, points) {
     // Start from the first intersection
     ctx.moveTo(fullPath[0].x, fullPath[0].y);
     console.log(fullPath);
-
     // Draw along the polyline
     for (let i = 1; i < fullPath.length; i++) {
       ctx.lineTo(fullPath[i].x, fullPath[i].y);
     }
 
+    var isBackwards = fullPath[0].x < fullPath[fullPath.length - 1].x ? 0 : 1;
+
     // Now close the polygon around one side of the canvas
-    if (invert) {
-      // go clockwise around the border to complete the opposite half
-      ctx.lineTo(width, height);
-      ctx.lineTo(0, height);
-      ctx.lineTo(0, 0);
+    if (!invert) {
+      //bottom half
+      if (isBackwards) {
+        ctx.lineTo(0, height);
+        ctx.lineTo(width, height);
+        ctx.lineTo(width, 0);
+      } else {
+        ctx.lineTo(width, height); //bottom right corner
+        ctx.lineTo(0, height); //bottom left corner
+        ctx.lineTo(0, 0); //top left corder
+      }
     } else {
-      // counter-clockwise around the border
-      ctx.lineTo(0, 0);
-      ctx.lineTo(width, 0);
-      ctx.lineTo(width, top);
-      ctx.lineTo(0, height);
+      // top half
+      if (isBackwards) {
+        ctx.lineTo(0, height);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(width, 0);
+      } else {
+        ctx.lineTo(width, 0);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(0, height);
+      }
     }
 
     ctx.closePath();
     ctx.clip();
-    ctx.fillRect(0, 0, width, height);
+
     ctx.drawImage(originalCanvas, 0, 0);
     ctx.restore();
+    console.log(ctx, c);
 
     return c;
   };
@@ -136,4 +173,4 @@ function splitCanvasByLine(originalCanvas, points) {
   };
 }
 
-export { splitCanvasByLine, segmentsCanvas };
+export { splitCanvasByLine, segmentsCanvas, screenLineToCanvasLine };

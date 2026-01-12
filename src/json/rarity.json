@@ -6,7 +6,9 @@
     "bg_type": "bg-round",
     "threshold": 0.15,
     "font_color": "#353535",
-    "num_twinkles": 0
+    "num_twinkles": 0,
+    "ribbon_palette": ["#575757", "#cbcbcbff", "#ffffffff"],
+    "completed_color": "#d0d0d0"
   },
   "1": {
     "id": "rare",
@@ -18,7 +20,10 @@
     "bg_type": "bg-wavy",
     "threshold": -0.2,
     "font_color": "#2a2f9a",
-    "num_twinkles": 3
+    "num_twinkles": 3,
+    "twinkle_shadow": "#00078d6e",
+    "ribbon_palette": ["#2804b5", "#aed5ffff", "#ffffffff"],
+    "completed_color": "#a1d0ff"
   },
   "2": {
     "id": "epic",
@@ -30,7 +35,10 @@
     "bg_type": "bg-spiky",
     "threshold": 0,
     "font_color": "#590289",
-    "num_twinkles": 7
+    "num_twinkles": 7,
+    "twinkle_shadow": "#62008f6e",
+    "ribbon_palette": ["#9b00a8", "#ecaeffff", "#ffffffff"],
+    "completed_color": "#d991ff"
   },
   "3": {
     "id": "legendary",
@@ -42,7 +50,10 @@
     "bg_type": "bg-flower",
     "threshold": 0,
     "font_color": "#b1810a",
-    "num_twinkles": 12,
-    "twinkle_threshold": -1
+    "num_twinkles": 20,
+    "twinkle_threshold": -1,
+    "twinkle_shadow": "#d49b0d6e",
+    "ribbon_palette": ["#916800", "#fff9c2ff", "#ffffffff"],
+    "completed_color": "#ffe77b"
   }
 }

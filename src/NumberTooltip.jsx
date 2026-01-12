@@ -1,15 +1,48 @@
 import { useState } from "react";
+import { factors, getRarity } from "./Util";
+import Markdown from "react-markdown";
 
 export default function NumberTooltip(props) {
-  const { n, numTimesRolled } = props;
+  const { n, numTimesRolled, isMobile } = props;
   var cn = "number-tooltip";
-  if (n <= 20) {
+  if (n <= 20 && !isMobile) {
     cn += " top";
   }
+  if (n % 10 == 1 && isMobile) {
+    cn += " left";
+  }
+  if (n % 10 == 0 && isMobile) {
+    cn += " right";
+  }
 
+  var factorsText = n + " is **prime**.";
+  var f = factors(n);
+  if (f.length > 2 || n == 1) {
+    factorsText = n + " is divisible by ";
+    for (var i = 0; i < f.length; i++) {
+      factorsText += "**" + f[i] + "**";
+      if (i < f.length - 2) {
+        factorsText += ", ";
+      }
+      if (i == f.length - 2) {
+        factorsText += " and ";
+      }
+    }
+    factorsText += ".";
+  }
   return (
     <div className={cn} id={"number-tooltip-" + n}>
-      Rolled {numTimesRolled ?? "0"}/{n} times
+      <div
+        className={"rarity-tooltip-text rarity-tooltip-text-" + getRarity(n)}
+      >
+        <Markdown>{getRarity(n).toUpperCase()}</Markdown>
+      </div>
+      <div>
+        Rolled {numTimesRolled ?? "0"}/{n} times
+      </div>
+      <div>
+        <Markdown>{factorsText}</Markdown>
+      </div>
     </div>
   );
 }

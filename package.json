@@ -12,9 +12,11 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "motion": "^12.23.26",
+    "ogl": "^1.0.11",
     "perfect-freehand": "^1.2.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
