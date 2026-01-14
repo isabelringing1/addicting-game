@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Timer from "./Timer";
-import ruled_paper from "/assets/ruled_paper.png";
+import ruled_paper from "/ruled_paper.png";
 import { DitherShader } from "./dither-shader";
 import MathProblem from "./MathProblem";
 import { EASY_HEARTS, HARD_HEARTS } from "./constants.js";

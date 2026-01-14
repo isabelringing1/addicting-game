@@ -1,6 +1,6 @@
 import { DitherShader } from "./dither-shader";
-import cardPackOld from "/assets/card_pack_old.png";
-import miniCardPack from "/assets/mini_card_pack.png";
+import cardPackOld from "/card_pack_old.png";
+import miniCardPack from "/mini_card_pack.png";
 
 import { getNumbersInPack } from "./Util";
 import { isMobile } from "./constants.js";
@@ -20,11 +20,24 @@ export default function PackShopEntry(props) {
   }
 
   function onMouseOver(e) {
-    console.log(e);
+    if (isMobile) {
+      return;
+    }
     setHighlightedNumbers(getNumbersInPack(pack));
   }
 
   function onMouseOut() {
+    if (isMobile) {
+      return;
+    }
+    setHighlightedNumbers([]);
+  }
+
+  function onTouchStart() {
+    setHighlightedNumbers(getNumbersInPack(pack));
+  }
+
+  function onTouchEnd() {
     setHighlightedNumbers([]);
   }
 
@@ -32,10 +45,10 @@ export default function PackShopEntry(props) {
     <div
       className="pack-shop-entry"
       onMouseOver={onMouseOver}
-      onTouchStart={onMouseOver}
+      onTouchStart={onTouchStart}
       onMouseOut={onMouseOut}
-      onTouchEnd={onMouseOut}
-      onTouchCancel={onMouseOut}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchEnd}
     >
       <div className="trash-button" onClick={() => trashPack(shopEntry)}>
         ✕

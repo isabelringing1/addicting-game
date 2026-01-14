@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import ribbon from "/assets/ribbon.png";
-import newBg from "/assets/new_bg.png";
-import speech_bubble from "/assets/speech_bubble.png";
+import ribbon from "/ribbon.png";
+import newBg from "/new_bg.png";
+import speech_bubble from "/speech_bubble.png";
 import { DitherShader } from "./dither-shader";
 import { getRarityData, getRarity } from "./Util";
 import numberData from "./json/numbers.json";

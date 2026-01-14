@@ -5,9 +5,10 @@ import {
   screenLineToCanvasLine,
 } from "./LineUtil";
 import Drawing from "./Drawing";
-import cardPackImg from "/assets/card_pack.png";
-import cardPackOld from "/assets/card_pack_old.png";
+import cardPackImg from "/card_pack.png";
+import cardPackOld from "/card_pack_old.png";
 import { DitherShader } from "./dither-shader";
+import { isMobile } from "./constants.js";
 
 const CardPack = (props) => {
   const { pack, openPack, hidePack, bigNumberQueue } = props;
@@ -22,7 +23,7 @@ const CardPack = (props) => {
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     const image = new Image();
-    image.src = "/assets/card_pack.png";
+    image.src = "./card_pack.png";
     image.onload = () => {
       context.drawImage(image, 0, 0, 373, 658);
     };
@@ -37,11 +38,14 @@ const CardPack = (props) => {
   const relativeCoordinatesForEvent = (mouseEvent) => {
     var x = mouseEvent.clientX;
     var y = mouseEvent.clientY;
+    console.log(document.height);
     if (mouseEvent.touches) {
       x = mouseEvent.touches[0].clientX;
       y = mouseEvent.touches[0].clientY;
     }
+
     const boundingRect = drawAreaRef.current.getBoundingClientRect();
+    console.log(x - boundingRect.left, y - boundingRect.top);
     return {
       x: x - boundingRect.left,
       y: y - boundingRect.top,
@@ -89,6 +93,7 @@ const CardPack = (props) => {
     if (!isDrawing) {
       return;
     }
+    console.log(segmentsCanvas(canvasRef.current, lines[0]));
     if (segmentsCanvas(canvasRef.current, lines[0])) {
       setIsDrawing(false);
 
@@ -129,8 +134,8 @@ const CardPack = (props) => {
           className="card-pack-img"
           id="card-pack-img-og"
           ref={canvasRef}
-          width={373}
-          height={658}
+          width={isMobile ? 250 : 373}
+          height={isMobile ? 470 : 658}
         />
       </div>
       {/*<DitherShader

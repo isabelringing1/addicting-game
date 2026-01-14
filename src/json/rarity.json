@@ -1,7 +1,7 @@
 {
   "0": {
     "id": "common",
-    "bg_path": "/assets/number_bg.png",
+    "bg_path": "./number_bg.png",
     "color_mode": "colorMode",
     "bg_type": "bg-round",
     "threshold": 0.15,
@@ -12,7 +12,7 @@
   },
   "1": {
     "id": "rare",
-    "bg_path": "/assets/number_bg2.png",
+    "bg_path": "./number_bg2.png",
     "color_mode": "custom",
     "primary_color": "#2c63db",
     "secondary_color": "#ffffff",
@@ -27,7 +27,7 @@
   },
   "2": {
     "id": "epic",
-    "bg_path": "/assets/number_bg3.png",
+    "bg_path": "./number_bg3.png",
     "color_mode": "custom",
     "primary_color": "#9411d1",
     "secondary_color": "#ffffff",
@@ -42,7 +42,7 @@
   },
   "3": {
     "id": "legendary",
-    "bg_path": "/assets/number_bg4.png",
+    "bg_path": "./number_bg4.png",
     "color_mode": "custom",
     "primary_color": "#d49b0d",
     "secondary_color": "#ffffff",

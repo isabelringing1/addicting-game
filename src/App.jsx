@@ -13,7 +13,7 @@ import PackShopMobile from "./PackShopMobile";
 import CharmShop from "./CharmShop";
 import OutOfHeartsContainer from "./OutOfHeartsContainer";
 
-import arrow from "/assets/arrow.png";
+import arrow from "/arrow.png";
 
 import { REFRESH_TIME, BASE_MAX_HEARTS, isMobile } from "./constants.js";
 
@@ -69,7 +69,7 @@ function App() {
   }, [numbers, cardShopEntries, timeMultiplier, diamonds, hearts, maxHearts]);
 
   useEffect(() => {
-    if (diamonds > 2000 && packShopState == "hidden") {
+    if (diamonds > 100 && packShopState == "hidden") {
       setPackShopState("unlocked");
       generatePackShopEntry(2);
     }
@@ -390,11 +390,11 @@ function App() {
       <div className="wallet-container">
         <div className="hearts-container">
           <div>
-            ♥: {hearts}/{maxHearts}
+            &hearts;&#xfe0e;: {hearts}/{maxHearts}
           </div>
           {nextHeartRefreshTime && (
-            <div>
-              Next ♥ in{" "}
+            <div className="next-heart-container">
+              Next &hearts;&#xfe0e; in{" "}
               <Timer
                 endTime={nextHeartRefreshTime}
                 onTimerEnd={refreshHearts}
@@ -403,7 +403,9 @@ function App() {
           )}
         </div>
 
-        <div id="diamonds-container">♦ {showDiamonds.toLocaleString()}</div>
+        <div id="diamonds-container">
+          &diams;&#xfe0e; {showDiamonds.toLocaleString()}
+        </div>
       </div>
 
       <div
@@ -417,14 +419,14 @@ function App() {
               disabled={showingRoll != -1 || hearts <= 0}
               onClick={rollNumber}
             >
-              Roll (1♥)
+              Roll (1&hearts;&#xfe0e;)
             </button>
             {hearts <= 0 && (
               <button
                 id="out-of-hearts-button"
                 onClick={() => setShowOutOfHearts(true)}
               >
-                Get More ♥
+                Get More &hearts;&#xfe0e;
               </button>
             )}
           </span>

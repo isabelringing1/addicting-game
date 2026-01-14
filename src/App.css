@@ -8,12 +8,12 @@ body {
 
 @font-face {
   font-family: Helvetica;
-  src: url("assets/Helvetica.woff");
+  src: url("Helvetica.woff");
 }
 
 @font-face {
   font-family: HelveticaBold;
-  src: url("assets/helvetica-bold.ttf");
+  src: url("helvetica-bold.ttf");
 }
 
 #content {
@@ -179,6 +179,7 @@ body {
   position: absolute;
   transform: translateY(100dvh);
   left: 0;
+  bottom: 0;
   pointer-events: all;
 }
 
@@ -1073,8 +1074,8 @@ input[type="number"] {
 /* Mobile */
 @media (max-width: 600px) {
   #numbers-grid {
-    width: 97vw;
-    height: 115vw;
+    width: 90vw;
+    height: 100vw;
     padding-top: 5dvh;
   }
 
@@ -1084,8 +1085,8 @@ input[type="number"] {
   }
 
   .number-container {
-    width: 9.7vw;
-    height: 11.5vw;
+    width: 9vw;
+    height: 10vw;
   }
 
   .number {
@@ -1235,7 +1236,7 @@ input[type="number"] {
   }
 
   .trash-button {
-    margin-right: 13dvh;
+    margin-right: 29vw;
     margin-top: -10dvh;
   }
 
@@ -1301,7 +1302,7 @@ input[type="number"] {
   .wallet-container {
     position: absolute;
     bottom: 0;
-    height: 41dvh;
+    height: 39dvh;
     width: 100vw;
     pointer-events: none;
   }
@@ -1311,13 +1312,30 @@ input[type="number"] {
     left: 10vw;
     text-align: left;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row;
   }
 
   #diamonds-container {
     position: absolute;
     right: 10vw;
     text-align: right;
-    padding-top: 2dvh;
+  }
+
+  #roll-button {
+    padding: 2vh 3vh;
+    font-size: 3vh;
+  }
+
+  .next-heart-container {
+    position: absolute;
+    left: 48vw;
+    width: 30vw;
+    transform: translate(-20vw, 0);
+    text-align: left;
+  }
+
+  .card-pack {
+    width: 250px;
+    height: 470px;
   }
 }

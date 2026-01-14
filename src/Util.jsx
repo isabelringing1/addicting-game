@@ -198,7 +198,6 @@ const rollForPack = () => {
 
   var rolledPack =
     packsOfRarity[Math.floor(Math.random() * packsOfRarity.length)];
-  console.log("Rolled pack w rarity " + rarity);
   return rolledPack;
 };
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 import { DitherShader } from "./dither-shader";
-import twinkle from "/assets/twinkle.png";
-import twinkleBig from "/assets/twinkle_big.png";
+import twinkle from "/twinkle.png";
+import twinkleBig from "/twinkle_big.png";
 
 export default function Twinkle(props) {
   const { data } = props;
