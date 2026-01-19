@@ -25,7 +25,6 @@ import {
 
 function App() {
   const [numbers, setNumbers] = useState({});
-  const [viewNumbers, setViewNumbers] = useState({});
   const [rolls, setRolls] = useState([]);
   const [highlightedNumber, setHighlightedNumber] = useState(-1);
   const [rolledNumber, setRolledNumber] = useState(-1);
@@ -54,7 +53,6 @@ function App() {
   const [sportsbookState, setSportsbookState] = useState("hidden"); //hidden, locked, unlocked
   const [animating, setAnimating] = useState(false);
   const [diamonds, setDiamonds] = useState(0);
-  const [viewDiamonds, setViewDiamonds] = useState(0);
   const [timeMultiplier, setTimeMultiplier] = useState(1);
   const [showOutOfHearts, setShowOutOfHearts] = useState(false);
   const [maxHearts, setMaxHearts] = useState(BASE_MAX_HEARTS);
@@ -112,14 +110,12 @@ function App() {
       try {
         saveData = JSON.parse(window.atob(saveData));
         setNumbers(saveData.numbers);
-        setViewNumbers(saveData.numbers);
         setRolls(saveData.rolls);
         setSportsbookState(saveData.sportsbookState);
         setPackShopState(saveData.packShopState);
         setPackShopEntriesUnlocked(saveData.packShopEntriesUnlocked);
         setCardShopEntries(saveData.cardShopEntries);
         setDiamonds(saveData.diamonds);
-        setViewDiamonds(saveData.diamonds);
         setHearts(saveData.hearts);
         setTimeMultiplier(saveData.timeMultiplier);
         setMaxHearts(saveData.maxHearts);
@@ -183,9 +179,7 @@ function App() {
       ? newNumbers[rolledNumber] + 1
       : 1;
     newRolls.push(rolledNumber);
-    setNumbers(newNumbers);
     setRolls(newRolls);
-    setDiamonds(diamonds + rolledNumber);
     showRolledNumber(newRolls[newRolls.length - 1]);
   };
 
@@ -272,7 +266,7 @@ function App() {
 
   const getGoalPercent = () => {
     if (goal == 0) {
-      return Object.keys(viewNumbers).length;
+      return Object.keys(numbers).length;
     }
     return 0;
   };
@@ -284,7 +278,6 @@ function App() {
         numbers={numbers}
         setHearts={setHearts}
         setDiamonds={setDiamonds}
-        setViewDiamonds={setViewDiamonds}
         rollNumber={rollNumber}
         generatePackShopEntry={generatePackShopEntry}
         setTimeMultiplier={setTimeMultiplier}
@@ -300,21 +293,21 @@ function App() {
       {bigNumberQueue.length > 0 && (
         <SplashDisplayFront
           n={bigNumberQueue[0]}
-          isNew={numbers[bigNumberQueue[0]] == 1}
+          isNew={numbers[bigNumberQueue[0]] == null}
           animating={animating}
         />
       )}
       {bigNumberQueue.length > 0 && (
         <SplashDisplayBack
           n={bigNumberQueue[0]}
+          numbers={numbers}
+          setNumbers={setNumbers}
           bigNumberQueue={bigNumberQueue}
           setBigNumberQueue={setBigNumberQueue}
           setAnimating={setAnimating}
           animating={animating}
-          viewNumbers={viewNumbers}
-          setViewNumbers={setViewNumbers}
-          setViewDiamonds={setViewDiamonds}
-          viewDiamonds={viewDiamonds}
+          diamonds={diamonds}
+          setDiamonds={setDiamonds}
         />
       )}
       <div className="goal-container">YOU ARE AT {getGoalPercent()}%</div>
@@ -325,14 +318,13 @@ function App() {
               <Number
                 key={"number-" + n}
                 n={n}
-                viewData={viewNumbers[n]}
+                data={numbers[n]}
                 isHighlighted={
                   highlightedNumber === n || highlightedNumbers.includes(n)
                 }
                 isRolled={rolledNumber === n}
                 showingRoll={showingRoll === n}
                 bigNumberQueue={bigNumberQueue}
-                isMobile={isMobile}
               />
             );
           })}
@@ -374,19 +366,14 @@ function App() {
         </div>
 
         <div id="diamonds-container">
-          &diams;&#xfe0e; {viewDiamonds.toLocaleString()}
+          &diams;&#xfe0e; {diamonds.toLocaleString()}
         </div>
       </div>
       <MenusContainer
-        numbers={numbers}
-        setNumbers={setNumbers}
-        rolls={rolls}
-        setRolls={setRolls}
         nextHeartRefreshTime={nextHeartRefreshTime}
         setNextHeartRefreshTime={setNextHeartRefreshTime}
         diamonds={diamonds}
         setDiamonds={setDiamonds}
-        setViewDiamonds={setViewDiamonds}
         hearts={hearts}
         setHearts={setHearts}
         maxHearts={maxHearts}
@@ -412,9 +399,11 @@ function App() {
         animating={animating}
         rollNumber={rollNumber}
         sportsbookState={sportsbookState}
+        setSportsbookState={setSportsbookState}
         setTimeMultiplier={setTimeMultiplier}
         refreshHearts={refreshHearts}
         trySwipe={trySwipe}
+        setShowOutOfHearts={setShowOutOfHearts}
       />
     </div>
   );

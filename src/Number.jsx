@@ -2,24 +2,19 @@ import { useState } from "react";
 import NumberTooltip from "./NumberTooltip";
 import { getRarityData } from "./Util";
 
+import { isMobile } from "./constants.js";
+
 function Number(props) {
-  const {
-    n,
-    viewData,
-    isHighlighted,
-    isRolled,
-    showingRoll,
-    bigNumberQueue,
-    isMobile,
-  } = props;
+  const { n, data, isHighlighted, isRolled, showingRoll, bigNumberQueue } =
+    props;
   const [hover, setHover] = useState(false);
 
   var opacity = 0.1;
   var numTimesRolled = 0;
   var rarityData = getRarityData(n);
 
-  if (viewData) {
-    numTimesRolled = viewData;
+  if (data) {
+    numTimesRolled = data;
     opacity = scale(numTimesRolled / n, 0, 1, 0.1, 1);
   }
   var containerClass = "number-container";
@@ -49,11 +44,7 @@ function Number(props) {
   return (
     <div className={containerClass} id={"number-container-" + n}>
       {hover && numTimesRolled > 0 && (
-        <NumberTooltip
-          n={n}
-          numTimesRolled={numTimesRolled}
-          isMobile={isMobile}
-        />
+        <NumberTooltip n={n} numTimesRolled={numTimesRolled} />
       )}
       {numTimesRolled >= n && (
         <div
@@ -72,9 +63,15 @@ function Number(props) {
           opacity: opacity,
         }}
         onMouseOver={() => {
+          if (isMobile) {
+            return;
+          }
           setHover(true);
         }}
         onMouseOut={() => {
+          if (isMobile) {
+            return;
+          }
           setHover(false);
         }}
         onTouchStart={() => {

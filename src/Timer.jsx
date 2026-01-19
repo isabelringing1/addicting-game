@@ -12,6 +12,7 @@ function Timer(props) {
       var t = endTime - Date.now();
       if (t <= 0) {
         setStatus("done");
+        console.log("calling on timer end");
         onTimerEnd();
       }
       setTimeLeft(t);

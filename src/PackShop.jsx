@@ -2,7 +2,7 @@ import { useState } from "react";
 import CardPack from "./CardPack";
 import PackShopEntry from "./PackShopEntry";
 import Timer from "./Timer";
-import { UNLOCK_ENTRY_COST, REFRESH_ENTRY_BASE_COST } from "./constants.js";
+import { UNLOCK_ENTRY_COST } from "./constants.js";
 
 import packData from "./json/packs.json";
 
@@ -20,6 +20,8 @@ export default function PackShop(props) {
     buyPack,
     trashPack,
     hidePack,
+    getRefreshEntryCost,
+    refreshPackShopEntry,
   } = props;
 
   const canUnlockShopEntry = () => {
@@ -28,10 +30,6 @@ export default function PackShop(props) {
 
   const canBuyRefreshEntry = (entry) => {
     return diamonds > getRefreshEntryCost(entry);
-  };
-
-  const getRefreshEntryCost = (entry) => {
-    return REFRESH_ENTRY_BASE_COST; // todo - implement scaling logic
   };
 
   return (
@@ -68,7 +66,7 @@ export default function PackShop(props) {
                     <button
                       onClick={() => {
                         if (canBuyRefreshEntry(shopEntry)) {
-                          generatePackShopEntry(1, [i]);
+                          refreshPackShopEntry(i);
                         }
                       }}
                       className="pack-shop-entry-unlock-button"

@@ -22,6 +22,8 @@ export default function PackShopMobile(props) {
     buyPack,
     trashPack,
     hidePack,
+    getRefreshEntryCost,
+    refreshPackShopEntry,
   } = props;
 
   const canUnlockShopEntry = () => {
@@ -30,10 +32,6 @@ export default function PackShopMobile(props) {
 
   const canBuyRefreshEntry = (entry) => {
     return diamonds > getRefreshEntryCost(entry);
-  };
-
-  const getRefreshEntryCost = (entry) => {
-    return REFRESH_ENTRY_BASE_COST; // todo - implement scaling logic
   };
 
   return (
@@ -70,10 +68,8 @@ export default function PackShopMobile(props) {
                     <button
                       onClick={() => {
                         if (canBuyRefreshEntry(shopEntry)) {
-                          generatePackShopEntry(1, [i]);
+                          refreshPackShopEntry(i);
                         }
-                        setDiamonds(diamonds - getRefreshEntryCost());
-                        setViewDiamonds(diamonds - getRefreshEntryCost());
                       }}
                       className="pack-shop-entry-unlock-button"
                       disabled={!canBuyRefreshEntry(shopEntry)}

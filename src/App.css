@@ -296,7 +296,7 @@ body {
   width: 100vw;
   height: 100dvh;
   position: absolute;
-  pointer-events: all;
+  pointer-events: none;
 }
 
 button {
@@ -327,15 +327,29 @@ button {
   z-index: 100;
 }
 
-#bets-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  justify-content: center;
+.sportsbook-container {
+  position: absolute;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
 }
 
-#bets-header {
+.sportsbook {
+  position: absolute;
+  width: 40dvh;
+
+  right: 2vw;
+  top: 40dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  pointer-events: all;
+  background-color: rgb(211, 211, 211);
+  border-radius: 3dvh;
+  padding: 1.2dvh;
+}
+
+.sportsbook-header {
   width: 100%;
   text-align: right;
   font-size: 2dvh;
@@ -344,25 +358,170 @@ button {
 }
 
 .bet {
-  width: 25dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+  background-color: rgb(240, 240, 240);
+  border-radius: 2.5dvh;
+  padding: 2dvh;
+  margin: 1dvh;
   height: 10dvh;
-  background-color: rgb(239 239 239);
-  border: 0.2dvh solid rgb(176, 176, 176);
-  margin-bottom: 1dvh;
+
+  --border-angle: 0deg;
+  --bg: #c9c9c9;
+}
+
+.animated-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.animated-border rect {
+  fill: none;
+  stroke-dasharray: 0.25 0.75;
+  animation: border-run linear infinite;
+}
+
+@keyframes border-run {
+  to {
+    stroke-dashoffset: -1;
+  }
 }
 
 .bet-title {
-  padding-top: 1.5dvh;
   font-size: 2dvh;
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
-.bet-info {
+.bet-left-column {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
   padding: 1dvh;
+  width: 100%;
+}
+
+.bet-confirmed-left {
+  padding: 0.5dvh !important;
+}
+
+.bet-button {
+  margin-bottom: 0.5vh;
+  border-radius: 1.8vh;
+  width: 8dvh;
+  border: none;
+  font-weight: bold;
+}
+
+#bet-button-confirm {
+  width: 12dvh;
+  background-color: #6ac5ff;
+}
+
+#bet-button-confirm:disabled {
+  background: #b6b6b6;
+}
+
+.bet-button-confirmed {
+  cursor: default;
+}
+
+.bet-button:hover:not(.bet-button-confirmed) {
+  filter: brightness(0.9);
+}
+
+.bet-green {
+  background-color: #5aff5a;
+}
+
+.bet-red {
+  background-color: #ff4040;
+}
+
+.bet-odds {
+  margin-left: 0.6vw;
+  font-weight: bold;
+  font-size: 1.7vh;
+}
+
+.bet-odds-big {
+  font-weight: bold;
+  font-size: 5vh;
+}
+
+.bet-good {
+  color: #3cdb3c;
+}
+
+.bet-bad {
+  color: #d70000;
+}
+
+.bet-right-column {
+  display: flex;
+  justify-content: start;
+  align-items: end;
+  flex-direction: column;
+  padding: 1dvh;
+  width: 80%;
+  height: 28%;
+  position: absolute;
+  pointer-events: none;
+}
+
+.bet-confirmed-right {
+  height: 80%;
+  padding: 0dvh !important;
+  justify-content: space-between;
+}
+
+.set-bet-container {
+  font-size: 4dvh;
+  height: 6vh;
+  display: flex;
+  align-items: end;
+  padding-top: 1vh;
+}
+
+#set-bet-input {
+  font-size: 4dvh;
+  border: none;
+  background-color: #00000000;
+  border-bottom: 0.2vh solid black;
+  width: 7vh;
+  pointer-events: all;
+}
+
+.bet-input-small {
+  font-size: 3dvh !important;
+}
+
+.bet-input-smaller {
+  font-size: 2dvh !important;
+}
+
+.bet-payout-container {
+  font-size: 1.9dvh;
+  padding-top: 1dvh;
+}
+
+.confirmed-payout-container {
+  font-size: 1.9dvh;
+}
+
+.bet-rolls-container {
+  font-size: 1.9dvh;
+  font-weight: bold;
+}
+
+.bet-confirmed-button-container {
+  position: absolute;
+  right: 8%;
 }
 
 .wallet-container {
@@ -1143,6 +1302,9 @@ input[type="number"] {
     width: 100vw;
     padding: 0;
     transition: transform 0.3s ease-in-out;
+    bottom: 0;
+    height: 40dvh;
+    pointer-events: all;
   }
 
   .bg-round {
@@ -1182,7 +1344,7 @@ input[type="number"] {
 
   .number-tooltip {
     width: 30vw;
-    height: 20vw;
+
     border-radius: 3vw;
     margin-bottom: 30vw;
   }

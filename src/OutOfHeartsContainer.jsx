@@ -36,10 +36,12 @@ export default function OutOfHeartsContainer(props) {
       rand1 = parseInt(rand1);
       rand2 = parseInt(rand2);
       var solution = rand1 + rand2;
-      if (operation == "-" && rand2 > rand1) {
-        var temp = rand1;
-        rand1 = rand2;
-        rand2 = temp;
+      if (operation == "-") {
+        if (rand2 > rand1) {
+          var temp = rand1;
+          rand1 = rand2;
+          rand2 = temp;
+        }
         solution = rand1 - rand2;
       }
 

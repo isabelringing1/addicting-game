@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { factors, getRarity } from "./Util";
 import Markdown from "react-markdown";
+import { isMobile } from "./constants.js";
 
 export default function NumberTooltip(props) {
   const { n, numTimesRolled, isMobile } = props;
   var cn = "number-tooltip";
-  if (n <= 20 && !isMobile) {
+  if (n <= 20) {
     cn += " top";
   }
   if (n % 10 == 1 && isMobile) {

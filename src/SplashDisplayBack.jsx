@@ -7,15 +7,14 @@ import { DitherShader } from "./dither-shader";
 export default function SplashDisplayBack(props) {
   const {
     n,
-    numTimesRolled,
+    numbers,
+    setNumbers,
     bigNumberQueue,
     setBigNumberQueue,
     animating,
     setAnimating,
-    viewNumbers,
-    setViewNumbers,
-    viewDiamonds,
-    setViewDiamonds,
+    diamonds,
+    setDiamonds,
   } = props;
 
   const [cn, setCn] = useState("big-number-container");
@@ -33,19 +32,20 @@ export default function SplashDisplayBack(props) {
     var number = document.getElementById("number-container-" + n);
     number.classList.remove("pulse-delay");
     number.classList.add("pulse-delay");
-    var diamonds = document.getElementById("diamonds-container");
-    diamonds.classList.add("pulse-delay");
+    var diamondsContainer = document.getElementById("diamonds-container");
+    diamondsContainer.classList.add("pulse-delay");
 
     setTimeout(() => {
       setBigNumberQueue(bigNumberQueue.slice(1));
       setAnimating(false);
       setCn("big-number-container");
 
-      var newViewNumbers = { ...viewNumbers };
-      newViewNumbers[n] = newViewNumbers[n] ? newViewNumbers[n] + 1 : 1;
-      setViewNumbers(newViewNumbers);
-      setViewDiamonds(viewDiamonds + n);
-      diamonds.classList.remove("pulse-delay");
+      var newNumbers = { ...numbers };
+      newNumbers[n] = newNumbers[n] ? newNumbers[n] + 1 : 1;
+      setNumbers(newNumbers);
+      console.log(diamonds, n);
+      setDiamonds(diamonds + n);
+      diamondsContainer.classList.remove("pulse-delay");
     }, 700);
   }
 
